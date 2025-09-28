@@ -1,147 +1,199 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>To’xtamirzayev Shoxjaxon – Huquqiy tadqiqotchi</title>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Shoxjaxon To’xtamirzayev – Huquqiy tadqiqotchi | AI & Yurisprudensiya</title>
+
+  <!-- Шрифты -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Roboto+Slab:wght@600&display=swap" rel="stylesheet">
+
+  <!-- Иконки -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚖️</text></svg>">
+
   <style>
-    /* ======= Umumiy ======= */
-    body {
-      margin: 0;
-      font-family: "Merriweather", serif;
-      background: #f5f7fa;
-      color: #333;
-      line-height: 1.6;
+    :root{
+      --primary:#0d253f; --secondary:#2a5298; --accent:#ffdd57;
+      --radius:12px; --shadow:0 6px 25px rgba(0,0,0,.15);
+      --transition:.4s cubic-bezier(.25,.8,.25,1);
     }
-    h1, h2, h3 {
-      font-family: "Roboto Slab", serif;
+    @media (prefers-color-scheme:dark){
+      :root{ --primary:#0a1929; --secondary:#1e3c72; --accent:#ffd166; }
+      body{background:#0d1117;color:#e6edf3}
+      .bio,.doc-section{background:#161b22;color:#e6edf3}
     }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:"Merriweather",serif;background:#f5f7fa;color:#333;line-height:1.6;overflow-x:hidden}
 
-    /* ======= Header ======= */
-    header {
-      background: linear-gradient(120deg, #0d253f, #1e3c72, #2a5298);
-      color: white;
-      text-align: center;
-      padding: 60px 20px;
-    }
-    header h1 {
-      font-size: 2.8em;
-      margin: 0;
-    }
-    header p {
-      font-size: 1.2em;
-      opacity: 0.9;
-    }
+    /* 3D Canvas Background */
+    #bg3d{position:fixed;inset:0;z-index:-1;pointer-events:none}
 
-    /* ======= Bio ======= */
-    .bio {
-      max-width: 900px;
-      margin: -40px auto 40px;
-      background: white;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 6px 25px rgba(0,0,0,0.15);
-      text-align: center;
-      animation: fadeUp 1.2s ease forwards;
-    }
-    .bio img {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      border: 4px solid #1e3c72;
-      margin-bottom: 15px;
-    }
-    .bio h2 {
-      margin: 10px 0 5px;
-      color: #1e3c72;
-    }
-    .bio p {
-      margin: 5px 0;
-      font-size: 1.05em;
-    }
-    .bio a {
-      color: #2a5298;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    .bio a:hover {
-      text-decoration: underline;
-    }
+    /* Header */
+    header{position:relative;text-align:center;padding:clamp(50px,12vw,100px) 20px;color:#fff;will-change:transform}
+    header h1{font-size:clamp(2.2em,6vw,3.5em);font-family:"Roboto Slab",serif;margin-bottom:10px}
+    header p{font-size:clamp(1.1em,3vw,1.4em);opacity:.9}
+    .law-icon{font-size:2em;display:inline-block;animation:scale 2s ease-in-out infinite}
+    @keyframes scale{50%{transform:scale(1.1)}}
 
-    /* ======= Qonun matni ======= */
-    .doc-section {
-      max-width: 1100px;
-      margin: 20px auto 40px;
-      background: white;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
-      animation: fadeUp 1.5s ease forwards;
-    }
-    .doc-section h2 {
-      text-align: center;
-      color: #1e3c72;
-    }
-    .doc-viewer {
-      width: 100%;
-      height: 85vh;
-      border: none;
-      border-radius: 8px;
-    }
+    /* Bio */
+    .bio{max-width:900px;margin:-40px auto 50px;background:#fff;padding:35px;border-radius:var(--radius);box-shadow:var(--shadow);text-align:center;transform:translateY(30px);opacity:0;animation:fadeUp 1.2s forwards}
+    .bio img{width:130px;height:130px;border-radius:50%;border:5px solid var(--secondary);margin-bottom:15px;transition:transform var(--transition)}
+    .bio img:hover{transform:scale(1.08) rotate(4deg)}
+    .bio h2{color:var(--secondary);margin:10px 0 5px}
+    .bio a{color:var(--secondary);font-weight:bold;text-decoration:none;position:relative}
+    .bio a::after{content:"";position:absolute;left:0;bottom:-2px;width:0;height:2px;background:var(--accent);transition:width var(--transition)}
+    .bio a:hover::after{width:100%}
 
-    /* ======= Footer ======= */
-    footer {
-      background: #0d253f;
-      color: white;
-      text-align: center;
-      padding: 20px;
-      font-size: 0.9em;
-      margin-top: 20px;
-    }
-    footer a {
-      color: #ffdd57;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    footer a:hover {
-      color: white;
-    }
+    /* Doc Section */
+    .doc-section{max-width:1100px;margin:20px auto 50px;background:#fff;padding:25px;border-radius:var(--radius);box-shadow:var(--shadow);opacity:0;transform:translateY(30px);animation:fadeUp 1.5s .3s forwards}
+    .doc-section h2{text-align:center;color:var(--secondary);margin-bottom:15px}
+    .doc-viewer{width:100%;height:80vh;border:none;border-radius:8px;background:#fafafa;transition:background .3s}
+    .doc-viewer:hover{background:#f0f4f8}
 
-    /* ======= Animatsiyalar ======= */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+    /* Footer */
+    footer{background:var(--primary);color:#fff;text-align:center;padding:20px;font-size:.9em}
+    footer a{color:var(--accent);text-decoration:none;font-weight:bold}
+
+    /* Scroll-Top Button */
+    #scrollTop{position:fixed;bottom:25px;right:25px;background:var(--secondary);color:#fff;border:none;border-radius:50%;width:50px;height:50px;font-size:22px;cursor:pointer;opacity:0;transform:scale(.8);transition:all var(--transition);z-index:999}
+    #scrollTop.show{opacity:1;transform:scale(1)}
+    #scrollTop:hover{background:var(--accent);color:var(--primary)}
+
+    /* AI Chat */
+    .chat-bubble{position:fixed;bottom:90px;right:25px;background:var(--secondary);color:#fff;border-radius:50%;width:60px;height:60px;display:flex;align-items:center;justify-content:center;font-size:26px;cursor:pointer;box-shadow:var(--transition);z-index:998;transition:transform var(--transition)}
+    .chat-bubble:hover{transform:scale(1.1)}
+    .chat-window{position:fixed;bottom:160px;right:25px;width:300px;height:400px;background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);display:none;flex-direction:column;z-index:1000}
+    .chat-header{background:var(--secondary);color:#fff;padding:10px;border-radius:var(--radius) var(--radius) 0 0;font-weight:bold}
+    .chat-body{flex:1;padding:10px;overflow-y:auto;font-size:14px}
+    .chat-input{display:flex;border-top:1px solid #ddd}
+    .chat-input input{flex:1;border:none;padding:10px;border-radius:0 0 0 var(--radius)}
+    .chat-input button{border:none;background:var(--accent);color:var(--primary);padding:10px;border-radius:0 0 var(--radius) 0;cursor:pointer}
+
+    /* Animations */
+    @keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+
+    /* Mobile */
+    @media(max-width:600px){.chat-window{width:90vw;right:5vw}}
   </style>
 </head>
 <body>
+  <!-- 3D Background -->
+  <canvas id="bg3d"></canvas>
+
   <!-- Header -->
   <header>
+    <div class="law-icon">⚖️</div>
     <h1>To’xtamirzayev Shoxjaxon</h1>
-    <p>Huquqiy tadqiqotchi</p>
+    <p>Huquqiy tadqiqotchi | AI & Yurisprudensiya</p>
   </header>
 
-  <!-- Bio bo‘limi -->
-  <div class="bio">
-    <img src="https://via.placeholder.com/120" alt="Profil rasmi">
-    <h2>Bosh yuristkonsult</h2>
-    <p>Suv xo‘jaligi vazirligi tizimidagi Podshoota-Chodak irrigatsiya tizimi boshqarmasi</p>
+  <!-- Bio -->
+  <section class="bio">
+    <img src="https://i.pravatar.cc/130?img=67" alt="Profil" loading="lazy"/>
+    <h2>Bosh yurist‑konsult</h2>
+    <p>Suv xo‘jaligi vazirligi tizimidagi Podshoota‑Chodak irrigatsiya tizimi boshqarmasi</p>
     <p>Tadqiqot sohasi: Sun’iy intellekt, huquqiy texnologiyalar, raqamli yurisprudensiya</p>
     <p>Aloqa: <a href="mailto:uzlegalai@gmail.com">uzlegalai@gmail.com</a></p>
-  </div>
+  </section>
 
-  <!-- Qonun loyihasi -->
-  <div class="doc-section">
+  <!-- Document -->
+  <section class="doc-section">
     <h2>“Sun’iy intellekt to‘g‘risida” Qonun loyihasi</h2>
-    <iframe 
-      class="doc-viewer"
-      src="https://docs.google.com/document/d/e/2PACX-1vSvgFU70dA7yhQNjBrs8SOtwDmVMpaHD9nC6DDkZD-4S07H9WgIv6SZp_nvLm8Ua_HNnHZ-HnhPxHBY/pub?embedded=true">
-    </iframe>
-  </div>
+    <iframe class="doc-viewer" src="https://docs.google.com/document/d/e/2PACX-1vSvgFU70dA7yhQNjBrs8SOtwDmVMpaHD9nC6DDkZD-4S07H9WgIv6SZp_nvLm8Ua_HNnHZ-HnhPxHBY/pub?embedded=true" loading="lazy" title="Qonun loyihasi"></iframe>
+  </section>
 
   <!-- Footer -->
   <footer>
     © 2025 To’xtamirzayev Shoxjaxon – <a href="mailto:uzlegalai@gmail.com">uzlegalai@gmail.com</a>
   </footer>
+
+  <!-- Scroll-Top -->
+  <button id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+  <!-- AI Chat -->
+  <div class="chat-bubble" onclick="toggleChat()">💬</div>
+  <div class="chat-window" id="chatWindow">
+    <div class="chat-header">AI Yordamchi</div>
+    <div class="chat-body" id="chatBody">
+      <p>Salom! Huquqiy masalaringiz bo‘yicha savollaringizni menga yozing.</p>
+    </div>
+    <div class="chat-input">
+      <input type="text" id="chatInput" placeholder="Xabar yozing..." onkeypress="if(event.key==='Enter') sendMessage()">
+      <button onclick="sendMessage()">➤</button>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    // Scroll-Top button
+    window.onscroll = () => {
+      const btn = document.getElementById('scrollTop');
+      window.scrollY > 300 ? btn.classList.add('show') : btn.classList.remove('show');
+    };
+
+    // Chat
+    function toggleChat() {
+      const w = document.getElementById('chatWindow');
+      w.style.display = w.style.display === 'flex' ? 'none' : 'flex';
+    }
+    function sendMessage() {
+      const inp = document.getElementById('chatInput');
+      const body = document.getElementById('chatBody');
+      const msg = inp.value.trim();
+      if (!msg) return;
+      body.innerHTML += `<p><strong>Siz:</strong> ${msg}</p>`;
+      inp.value = '';
+      setTimeout(() => {
+        body.innerHTML += `<p><strong>AI:</strong> Savolingiz uchun rahmat. Huquqiy maslahat tez orada.</p>`;
+        body.scrollTop = body.scrollHeight;
+      }, 800);
+    }
+
+    // 3D Background (WebGL plasma)
+    const canvas = document.getElementById('bg3d');
+    const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+    function resize() {
+      canvas.width = innerWidth * devicePixelRatio;
+      canvas.height = innerHeight * devicePixelRatio;
+      canvas.style.width = innerWidth + 'px';
+      canvas.style.height = innerHeight + 'px';
+      gl.viewport(0, 0, canvas.width, canvas.height);
+    }
+    addEventListener('resize', resize); resize();
+    const vert = `
+      attribute vec2 aPos;
+      void main(){gl_Position=vec4(aPos,0.0,1.0);}`;
+    const frag = `
+      precision mediump float;
+      uniform float uTime;
+      uniform vec2 uRes;
+      void main(){
+        vec2 uv=(gl_FragCoord.xy*2.0-uRes.xy)/min(uRes.x,uRes.y);
+        float t=uTime*0.3;
+        float r=sin(length(uv+vec2(sin(t),cos(t))*0.4)*3.0+t*1.5)*0.5+0.5;
+        float g=sin(length(uv+vec2(cos(t*1.1),sin(t*0.9))*0.5)*2.8+t*1.2)*0.5+0.5;
+        float b=sin(length(uv+vec2(sin(t*0.8),cos(t*1.2))*0.6)*2.6+t*1.8)*0.5+0.5;
+        gl_FragColor=vec4(r,g,b,1.0);
+      }`;
+    function compile(src,type){
+      const s=gl.createShader(type); gl.shaderSource(s,src); gl.compileShader(s); return s;
+    }
+    const prog = gl.createProgram();
+    gl.attachShader(prog,compile(vert,gl.VERTEX_SHADER));
+    gl.attachShader(prog,compile(frag,gl.FRAGMENT_SHADER));
+    gl.linkProgram(prog); gl.useProgram(prog);
+    const buf = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER,buf);
+    gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,-1,1,1,-1,1,1]),gl.STATIC_DRAW);
+    const aPos=gl.getAttribLocation(prog,'aPos');
+    gl.enableVertexAttribArray(aPos); gl.vertexAttribPointer(aPos,2,gl.FLOAT,false,0,0);
+    const uTime=gl.getUniformLocation(prog,'uTime'), uRes=gl.getUniformLocation(prog,'uRes');
+    function draw(t){
+      gl.uniform1f(uTime,t*0.001); gl.uniform2f(uRes,canvas.width,canvas.height);
+      gl.drawArrays(gl.TRIANGLES,0,6); requestAnimationFrame(draw);
+    }
+    requestAnimationFrame(draw);
+  </script>
 </body>
 </html>
